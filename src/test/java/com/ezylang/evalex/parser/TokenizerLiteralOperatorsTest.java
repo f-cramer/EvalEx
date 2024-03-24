@@ -25,7 +25,7 @@ import com.ezylang.evalex.operators.InfixOperator;
 import com.ezylang.evalex.operators.PostfixOperator;
 import com.ezylang.evalex.operators.PrefixOperator;
 import com.ezylang.evalex.parser.Token.TokenType;
-import java.util.Map;
+import java.util.AbstractMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,10 +35,10 @@ class TokenizerLiteralOperatorsTest extends BaseParserTest {
   public void setup() {
     configuration =
         configuration.withAdditionalOperators(
-            Map.entry("AND", new AndOperator()),
-            Map.entry("OR", new OrOperator()),
-            Map.entry("NOT", new NotOperator()),
-            Map.entry("DENIED", new DeniedOperator()));
+            new AbstractMap.SimpleEntry<>("AND", new AndOperator()),
+            new AbstractMap.SimpleEntry<>("OR", new OrOperator()),
+            new AbstractMap.SimpleEntry<>("NOT", new NotOperator()),
+            new AbstractMap.SimpleEntry<>("DENIED", new DeniedOperator()));
   }
 
   @Test

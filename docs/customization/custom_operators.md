@@ -107,8 +107,8 @@ than one operator:
 ExpressionConfiguration configuration =
     ExpressionConfiguration.defaultConfiguration()
         .withAdditionalOperators(
-            Map.entry("AND", new InfixAndOperator()),
-            Map.entry("OR", new InfixOrOperator()));
+            new AbstractMap.SimpleEntry<>("AND", new InfixAndOperator()),
+            new AbstractMap.SimpleEntry<>("OR", new InfixOrOperator()));
     
 Expression expression = new Expression("(a > 5 AND x < 10) OR (y < 0)");
 ```

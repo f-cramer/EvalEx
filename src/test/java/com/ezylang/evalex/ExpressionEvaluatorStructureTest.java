@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.ezylang.evalex.parser.ParseException;
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ class ExpressionEvaluatorStructureTest extends BaseExpressionEvaluatorTest {
   @Test
   void testStructureScientificNumberDistinction() throws EvaluationException, ParseException {
     Map<String, BigDecimal> structure =
-        new HashMap<>() {
+        new HashMap<String, BigDecimal>() {
           {
             put("environment_id", new BigDecimal(12345));
           }
@@ -60,7 +61,7 @@ class ExpressionEvaluatorStructureTest extends BaseExpressionEvaluatorTest {
   @Test
   void testSimpleStructure() throws ParseException, EvaluationException {
     Map<String, BigDecimal> structure =
-        new HashMap<>() {
+        new HashMap<String, BigDecimal>() {
           {
             put("b", new BigDecimal(99));
           }
@@ -76,7 +77,7 @@ class ExpressionEvaluatorStructureTest extends BaseExpressionEvaluatorTest {
     Map<String, Map<String, BigDecimal>> structure = new HashMap<>();
 
     Map<String, BigDecimal> subStructure =
-        new HashMap<>() {
+        new HashMap<String, BigDecimal>() {
           {
             put("c", new BigDecimal(95));
           }
@@ -124,7 +125,7 @@ class ExpressionEvaluatorStructureTest extends BaseExpressionEvaluatorTest {
     Map<String, Object> structure = new HashMap<>();
     Map<String, Object> subStructure = new HashMap<>();
     subStructure.put("prop c", 99);
-    structure.put("prop b", List.of(subStructure));
+    structure.put("prop b", Collections.singletonList(subStructure));
 
     Expression expression = createExpression("a.\"prop b\"[0].\"prop c\"").with("a", structure);
 
@@ -134,7 +135,7 @@ class ExpressionEvaluatorStructureTest extends BaseExpressionEvaluatorTest {
   @Test
   void testStructureWithSpaceInNameAndArrayAccess() throws EvaluationException, ParseException {
     Map<String, List<Integer>> structure =
-        new HashMap<>() {
+        new HashMap<String, List<Integer>>() {
           {
             put("b prop", Arrays.asList(1, 2, 3));
           }

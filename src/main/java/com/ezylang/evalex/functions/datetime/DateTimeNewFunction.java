@@ -25,7 +25,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Set;
+import java.util.Arrays;
 import java.util.TimeZone;
 
 /**
@@ -90,7 +90,7 @@ public class DateTimeNewFunction extends AbstractFunction {
     }
 
     if (parameterValues[parameterLength - 1].isStringValue()) {
-      if (!Set.of(TimeZone.getAvailableIDs())
+      if (!Arrays.asList(TimeZone.getAvailableIDs())
           .contains(parameterValues[parameterLength - 1].getStringValue())) {
         throw new EvaluationException(
             token,

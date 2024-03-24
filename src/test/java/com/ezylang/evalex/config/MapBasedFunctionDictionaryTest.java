@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.ezylang.evalex.functions.FunctionIfc;
 import com.ezylang.evalex.functions.basic.MaxFunction;
 import com.ezylang.evalex.functions.basic.MinFunction;
-import java.util.Map;
+import java.util.AbstractMap;
 import org.junit.jupiter.api.Test;
 
 class MapBasedFunctionDictionaryTest {
@@ -32,7 +32,8 @@ class MapBasedFunctionDictionaryTest {
 
     @SuppressWarnings({"unchecked", "varargs"})
     FunctionDictionaryIfc dictionary =
-        MapBasedFunctionDictionary.ofFunctions(Map.entry("min", min), Map.entry("max", max));
+        MapBasedFunctionDictionary.ofFunctions(
+            new AbstractMap.SimpleEntry<>("min", min), new AbstractMap.SimpleEntry<>("max", max));
 
     assertThat(dictionary.hasFunction("min")).isTrue();
     assertThat(dictionary.hasFunction("max")).isTrue();
@@ -50,7 +51,8 @@ class MapBasedFunctionDictionaryTest {
 
     @SuppressWarnings({"unchecked", "varargs"})
     FunctionDictionaryIfc dictionary =
-        MapBasedFunctionDictionary.ofFunctions(Map.entry("Min", min), Map.entry("MAX", max));
+        MapBasedFunctionDictionary.ofFunctions(
+            new AbstractMap.SimpleEntry<>("Min", min), new AbstractMap.SimpleEntry<>("MAX", max));
 
     assertThat(dictionary.hasFunction("min")).isTrue();
     assertThat(dictionary.hasFunction("MIN")).isTrue();

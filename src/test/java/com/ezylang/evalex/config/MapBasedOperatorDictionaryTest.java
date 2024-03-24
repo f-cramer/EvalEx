@@ -21,7 +21,7 @@ import com.ezylang.evalex.config.TestConfigurationProvider.PostfixQuestionOperat
 import com.ezylang.evalex.config.TestConfigurationProvider.PrefixPlusPlusOperator;
 import com.ezylang.evalex.operators.OperatorIfc;
 import com.ezylang.evalex.operators.arithmetic.InfixModuloOperator;
-import java.util.Map;
+import java.util.AbstractMap;
 import org.junit.jupiter.api.Test;
 
 class MapBasedOperatorDictionaryTest {
@@ -35,7 +35,9 @@ class MapBasedOperatorDictionaryTest {
     @SuppressWarnings({"unchecked", "varargs"})
     OperatorDictionaryIfc dictionary =
         MapBasedOperatorDictionary.ofOperators(
-            Map.entry("++", prefix), Map.entry("?", postfix), Map.entry("%", infix));
+            new AbstractMap.SimpleEntry<>("++", prefix),
+            new AbstractMap.SimpleEntry<>("?", postfix),
+            new AbstractMap.SimpleEntry<>("%", infix));
 
     assertThat(dictionary.hasPrefixOperator("++")).isTrue();
     assertThat(dictionary.hasPostfixOperator("?")).isTrue();
@@ -59,9 +61,9 @@ class MapBasedOperatorDictionaryTest {
     @SuppressWarnings({"unchecked", "varargs"})
     OperatorDictionaryIfc dictionary =
         MapBasedOperatorDictionary.ofOperators(
-            Map.entry("PlusPlus", prefix),
-            Map.entry("Question", postfix),
-            Map.entry("Percent", infix));
+            new AbstractMap.SimpleEntry<>("PlusPlus", prefix),
+            new AbstractMap.SimpleEntry<>("Question", postfix),
+            new AbstractMap.SimpleEntry<>("Percent", infix));
 
     assertThat(dictionary.hasPrefixOperator("PlusPlus")).isTrue();
     assertThat(dictionary.hasPrefixOperator("plusplus")).isTrue();

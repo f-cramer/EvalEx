@@ -55,10 +55,10 @@ import lombok.Getter;
  * <pre>
  *     ExpressionConfiguration.defaultConfiguration()
  *        .withAdditionalOperators(
- *            Map.entry("++", new PrefixPlusPlusOperator()),
- *            Map.entry("++", new PostfixPlusPlusOperator()))
- *        .withAdditionalFunctions(Map.entry("save", new SaveFunction()),
- *            Map.entry("update", new UpdateFunction()));
+ *            new AbstractMap.SimpleEntry<>("++", new PrefixPlusPlusOperator()),
+ *            new AbstractMap.SimpleEntry<>("++", new PostfixPlusPlusOperator()))
+ *        .withAdditionalFunctions(new AbstractMap.SimpleEntry<>("save", new SaveFunction()),
+ *            new AbstractMap.SimpleEntry<>("update", new UpdateFunction()));
  * </pre>
  */
 @Builder(toBuilder = true)
@@ -88,7 +88,7 @@ public class ExpressionConfiguration {
    */
   protected static final List<DateTimeFormatter> DEFAULT_DATE_TIME_FORMATTERS =
       new ArrayList<>(
-          List.of(
+          Arrays.asList(
               DateTimeFormatter.ISO_DATE_TIME,
               DateTimeFormatter.ISO_DATE,
               DateTimeFormatter.ISO_LOCAL_DATE_TIME,
@@ -102,26 +102,26 @@ public class ExpressionConfiguration {
   private final OperatorDictionaryIfc operatorDictionary =
       MapBasedOperatorDictionary.ofOperators(
           // arithmetic
-          Map.entry("+", new PrefixPlusOperator()),
-          Map.entry("-", new PrefixMinusOperator()),
-          Map.entry("+", new InfixPlusOperator()),
-          Map.entry("-", new InfixMinusOperator()),
-          Map.entry("*", new InfixMultiplicationOperator()),
-          Map.entry("/", new InfixDivisionOperator()),
-          Map.entry("^", new InfixPowerOfOperator()),
-          Map.entry("%", new InfixModuloOperator()),
+          new AbstractMap.SimpleEntry<>("+", new PrefixPlusOperator()),
+          new AbstractMap.SimpleEntry<>("-", new PrefixMinusOperator()),
+          new AbstractMap.SimpleEntry<>("+", new InfixPlusOperator()),
+          new AbstractMap.SimpleEntry<>("-", new InfixMinusOperator()),
+          new AbstractMap.SimpleEntry<>("*", new InfixMultiplicationOperator()),
+          new AbstractMap.SimpleEntry<>("/", new InfixDivisionOperator()),
+          new AbstractMap.SimpleEntry<>("^", new InfixPowerOfOperator()),
+          new AbstractMap.SimpleEntry<>("%", new InfixModuloOperator()),
           // booleans
-          Map.entry("=", new InfixEqualsOperator()),
-          Map.entry("==", new InfixEqualsOperator()),
-          Map.entry("!=", new InfixNotEqualsOperator()),
-          Map.entry("<>", new InfixNotEqualsOperator()),
-          Map.entry(">", new InfixGreaterOperator()),
-          Map.entry(">=", new InfixGreaterEqualsOperator()),
-          Map.entry("<", new InfixLessOperator()),
-          Map.entry("<=", new InfixLessEqualsOperator()),
-          Map.entry("&&", new InfixAndOperator()),
-          Map.entry("||", new InfixOrOperator()),
-          Map.entry("!", new PrefixNotOperator()));
+          new AbstractMap.SimpleEntry<>("=", new InfixEqualsOperator()),
+          new AbstractMap.SimpleEntry<>("==", new InfixEqualsOperator()),
+          new AbstractMap.SimpleEntry<>("!=", new InfixNotEqualsOperator()),
+          new AbstractMap.SimpleEntry<>("<>", new InfixNotEqualsOperator()),
+          new AbstractMap.SimpleEntry<>(">", new InfixGreaterOperator()),
+          new AbstractMap.SimpleEntry<>(">=", new InfixGreaterEqualsOperator()),
+          new AbstractMap.SimpleEntry<>("<", new InfixLessOperator()),
+          new AbstractMap.SimpleEntry<>("<=", new InfixLessEqualsOperator()),
+          new AbstractMap.SimpleEntry<>("&&", new InfixAndOperator()),
+          new AbstractMap.SimpleEntry<>("||", new InfixOrOperator()),
+          new AbstractMap.SimpleEntry<>("!", new PrefixNotOperator()));
 
   /** The function dictionary holds all functions that will be allowed in an expression. */
   @Builder.Default
@@ -130,69 +130,70 @@ public class ExpressionConfiguration {
   private final FunctionDictionaryIfc functionDictionary =
       MapBasedFunctionDictionary.ofFunctions(
           // basic functions
-          Map.entry("ABS", new AbsFunction()),
-          Map.entry("CEILING", new CeilingFunction()),
-          Map.entry("COALESCE", new CoalesceFunction()),
-          Map.entry("FACT", new FactFunction()),
-          Map.entry("FLOOR", new FloorFunction()),
-          Map.entry("IF", new IfFunction()),
-          Map.entry("LOG", new LogFunction()),
-          Map.entry("LOG10", new Log10Function()),
-          Map.entry("MAX", new MaxFunction()),
-          Map.entry("MIN", new MinFunction()),
-          Map.entry("NOT", new NotFunction()),
-          Map.entry("RANDOM", new RandomFunction()),
-          Map.entry("ROUND", new RoundFunction()),
-          Map.entry("SUM", new SumFunction()),
-          Map.entry("SQRT", new SqrtFunction()),
+          new AbstractMap.SimpleEntry<>("ABS", new AbsFunction()),
+          new AbstractMap.SimpleEntry<>("CEILING", new CeilingFunction()),
+          new AbstractMap.SimpleEntry<>("COALESCE", new CoalesceFunction()),
+          new AbstractMap.SimpleEntry<>("FACT", new FactFunction()),
+          new AbstractMap.SimpleEntry<>("FLOOR", new FloorFunction()),
+          new AbstractMap.SimpleEntry<>("IF", new IfFunction()),
+          new AbstractMap.SimpleEntry<>("LOG", new LogFunction()),
+          new AbstractMap.SimpleEntry<>("LOG10", new Log10Function()),
+          new AbstractMap.SimpleEntry<>("MAX", new MaxFunction()),
+          new AbstractMap.SimpleEntry<>("MIN", new MinFunction()),
+          new AbstractMap.SimpleEntry<>("NOT", new NotFunction()),
+          new AbstractMap.SimpleEntry<>("RANDOM", new RandomFunction()),
+          new AbstractMap.SimpleEntry<>("ROUND", new RoundFunction()),
+          new AbstractMap.SimpleEntry<>("SUM", new SumFunction()),
+          new AbstractMap.SimpleEntry<>("SQRT", new SqrtFunction()),
           // trigonometric
-          Map.entry("ACOS", new AcosFunction()),
-          Map.entry("ACOSH", new AcosHFunction()),
-          Map.entry("ACOSR", new AcosRFunction()),
-          Map.entry("ACOT", new AcotFunction()),
-          Map.entry("ACOTH", new AcotHFunction()),
-          Map.entry("ACOTR", new AcotRFunction()),
-          Map.entry("ASIN", new AsinFunction()),
-          Map.entry("ASINH", new AsinHFunction()),
-          Map.entry("ASINR", new AsinRFunction()),
-          Map.entry("ATAN", new AtanFunction()),
-          Map.entry("ATAN2", new Atan2Function()),
-          Map.entry("ATAN2R", new Atan2RFunction()),
-          Map.entry("ATANH", new AtanHFunction()),
-          Map.entry("ATANR", new AtanRFunction()),
-          Map.entry("COS", new CosFunction()),
-          Map.entry("COSH", new CosHFunction()),
-          Map.entry("COSR", new CosRFunction()),
-          Map.entry("COT", new CotFunction()),
-          Map.entry("COTH", new CotHFunction()),
-          Map.entry("COTR", new CotRFunction()),
-          Map.entry("CSC", new CscFunction()),
-          Map.entry("CSCH", new CscHFunction()),
-          Map.entry("CSCR", new CscRFunction()),
-          Map.entry("DEG", new DegFunction()),
-          Map.entry("RAD", new RadFunction()),
-          Map.entry("SIN", new SinFunction()),
-          Map.entry("SINH", new SinHFunction()),
-          Map.entry("SINR", new SinRFunction()),
-          Map.entry("SEC", new SecFunction()),
-          Map.entry("SECH", new SecHFunction()),
-          Map.entry("SECR", new SecRFunction()),
-          Map.entry("TAN", new TanFunction()),
-          Map.entry("TANH", new TanHFunction()),
-          Map.entry("TANR", new TanRFunction()),
+          new AbstractMap.SimpleEntry<>("ACOS", new AcosFunction()),
+          new AbstractMap.SimpleEntry<>("ACOSH", new AcosHFunction()),
+          new AbstractMap.SimpleEntry<>("ACOSR", new AcosRFunction()),
+          new AbstractMap.SimpleEntry<>("ACOT", new AcotFunction()),
+          new AbstractMap.SimpleEntry<>("ACOTH", new AcotHFunction()),
+          new AbstractMap.SimpleEntry<>("ACOTR", new AcotRFunction()),
+          new AbstractMap.SimpleEntry<>("ASIN", new AsinFunction()),
+          new AbstractMap.SimpleEntry<>("ASINH", new AsinHFunction()),
+          new AbstractMap.SimpleEntry<>("ASINR", new AsinRFunction()),
+          new AbstractMap.SimpleEntry<>("ATAN", new AtanFunction()),
+          new AbstractMap.SimpleEntry<>("ATAN2", new Atan2Function()),
+          new AbstractMap.SimpleEntry<>("ATAN2R", new Atan2RFunction()),
+          new AbstractMap.SimpleEntry<>("ATANH", new AtanHFunction()),
+          new AbstractMap.SimpleEntry<>("ATANR", new AtanRFunction()),
+          new AbstractMap.SimpleEntry<>("COS", new CosFunction()),
+          new AbstractMap.SimpleEntry<>("COSH", new CosHFunction()),
+          new AbstractMap.SimpleEntry<>("COSR", new CosRFunction()),
+          new AbstractMap.SimpleEntry<>("COT", new CotFunction()),
+          new AbstractMap.SimpleEntry<>("COTH", new CotHFunction()),
+          new AbstractMap.SimpleEntry<>("COTR", new CotRFunction()),
+          new AbstractMap.SimpleEntry<>("CSC", new CscFunction()),
+          new AbstractMap.SimpleEntry<>("CSCH", new CscHFunction()),
+          new AbstractMap.SimpleEntry<>("CSCR", new CscRFunction()),
+          new AbstractMap.SimpleEntry<>("DEG", new DegFunction()),
+          new AbstractMap.SimpleEntry<>("RAD", new RadFunction()),
+          new AbstractMap.SimpleEntry<>("SIN", new SinFunction()),
+          new AbstractMap.SimpleEntry<>("SINH", new SinHFunction()),
+          new AbstractMap.SimpleEntry<>("SINR", new SinRFunction()),
+          new AbstractMap.SimpleEntry<>("SEC", new SecFunction()),
+          new AbstractMap.SimpleEntry<>("SECH", new SecHFunction()),
+          new AbstractMap.SimpleEntry<>("SECR", new SecRFunction()),
+          new AbstractMap.SimpleEntry<>("TAN", new TanFunction()),
+          new AbstractMap.SimpleEntry<>("TANH", new TanHFunction()),
+          new AbstractMap.SimpleEntry<>("TANR", new TanRFunction()),
           // string functions
-          Map.entry("STR_CONTAINS", new StringContains()),
-          Map.entry("STR_LOWER", new StringLowerFunction()),
-          Map.entry("STR_UPPER", new StringUpperFunction()),
+          new AbstractMap.SimpleEntry<>("STR_CONTAINS", new StringContains()),
+          new AbstractMap.SimpleEntry<>("STR_LOWER", new StringLowerFunction()),
+          new AbstractMap.SimpleEntry<>("STR_UPPER", new StringUpperFunction()),
           // date time functions
-          Map.entry("DT_DATE_NEW", new DateTimeNewFunction()),
-          Map.entry("DT_DATE_PARSE", new DateTimeParseFunction()),
-          Map.entry("DT_DATE_FORMAT", new DateTimeFormatFunction()),
-          Map.entry("DT_DATE_TO_EPOCH", new DateTimeToEpochFunction()),
-          Map.entry("DT_DURATION_NEW", new DurationNewFunction()),
-          Map.entry("DT_DURATION_FROM_MILLIS", new DurationFromMillisFunction()),
-          Map.entry("DT_DURATION_TO_MILLIS", new DurationToMillisFunction()),
-          Map.entry("DT_DURATION_PARSE", new DurationParseFunction()));
+          new AbstractMap.SimpleEntry<>("DT_DATE_NEW", new DateTimeNewFunction()),
+          new AbstractMap.SimpleEntry<>("DT_DATE_PARSE", new DateTimeParseFunction()),
+          new AbstractMap.SimpleEntry<>("DT_DATE_FORMAT", new DateTimeFormatFunction()),
+          new AbstractMap.SimpleEntry<>("DT_DATE_TO_EPOCH", new DateTimeToEpochFunction()),
+          new AbstractMap.SimpleEntry<>("DT_DURATION_NEW", new DurationNewFunction()),
+          new AbstractMap.SimpleEntry<>(
+              "DT_DURATION_FROM_MILLIS", new DurationFromMillisFunction()),
+          new AbstractMap.SimpleEntry<>("DT_DURATION_TO_MILLIS", new DurationToMillisFunction()),
+          new AbstractMap.SimpleEntry<>("DT_DURATION_PARSE", new DurationParseFunction()));
 
   /** The math context to use. */
   @Builder.Default @Getter private final MathContext mathContext = DEFAULT_MATH_CONTEXT;
@@ -298,8 +299,8 @@ public class ExpressionConfiguration {
    *     Example: <code>
    *        ExpressionConfiguration.defaultConfiguration()
    *          .withAdditionalOperators(
-   *            Map.entry("++", new PrefixPlusPlusOperator()),
-   *            Map.entry("++", new PostfixPlusPlusOperator()));
+   *            new AbstractMap.SimpleEntry<>("++", new PrefixPlusPlusOperator()),
+   *            new AbstractMap.SimpleEntry<>("++", new PostfixPlusPlusOperator()));
    *     </code>
    * @return The modified configuration, to allow chaining of methods.
    */
@@ -319,8 +320,8 @@ public class ExpressionConfiguration {
    *     Example: <code>
    *        ExpressionConfiguration.defaultConfiguration()
    *          .withAdditionalFunctions(
-   *            Map.entry("save", new SaveFunction()),
-   *            Map.entry("update", new UpdateFunction()));
+   *            new AbstractMap.SimpleEntry<>("save", new SaveFunction()),
+   *            new AbstractMap.SimpleEntry<>("update", new UpdateFunction()));
    *     </code>
    * @return The modified configuration, to allow chaining of methods.
    */

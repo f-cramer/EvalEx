@@ -135,8 +135,8 @@ than one function:
 ExpressionConfiguration configuration =
     ExpressionConfiguration.defaultConfiguration()
         .withAdditionalFunctions(
-            Map.entry("MAX_VALUE", new MaxFunction()),
-            Map.entry("MIN_VALUE", new MinFunction()));
+            new AbstractMap.SimpleEntry<>("MAX_VALUE", new MaxFunction()),
+            new AbstractMap.SimpleEntry<>("MIN_VALUE", new MinFunction()));
     
 Expression expression = new Expression("MAX_VALUE(1,2,3) + MIN_VALUE(7,8,9)");
 ```

@@ -24,6 +24,7 @@ import com.ezylang.evalex.data.MapBasedDataAccessor;
 import com.ezylang.evalex.operators.OperatorIfc;
 import com.ezylang.evalex.operators.arithmetic.InfixPlusOperator;
 import java.math.MathContext;
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
@@ -62,8 +63,8 @@ class ExpressionConfigurationTest {
     ExpressionConfiguration configuration =
         ExpressionConfiguration.defaultConfiguration()
             .withAdditionalOperators(
-                Map.entry("ADDED1", new InfixPlusOperator()),
-                Map.entry("ADDED2", new InfixPlusOperator()));
+                new AbstractMap.SimpleEntry<>("ADDED1", new InfixPlusOperator()),
+                new AbstractMap.SimpleEntry<>("ADDED2", new InfixPlusOperator()));
 
     assertThat(configuration.getOperatorDictionary().hasInfixOperator("ADDED1")).isTrue();
     assertThat(configuration.getOperatorDictionary().hasInfixOperator("ADDED2")).isTrue();
@@ -74,7 +75,8 @@ class ExpressionConfigurationTest {
     ExpressionConfiguration configuration =
         ExpressionConfiguration.defaultConfiguration()
             .withAdditionalFunctions(
-                Map.entry("ADDED1", new DummyFunction()), Map.entry("ADDED2", new DummyFunction()));
+                new AbstractMap.SimpleEntry<>("ADDED1", new DummyFunction()),
+                new AbstractMap.SimpleEntry<>("ADDED2", new DummyFunction()));
 
     assertThat(configuration.getFunctionDictionary().hasFunction("ADDED1")).isTrue();
     assertThat(configuration.getFunctionDictionary().hasFunction("ADDED2")).isTrue();
@@ -131,7 +133,7 @@ class ExpressionConfigurationTest {
   @Test
   void testCustomConstants() {
     Map<String, EvaluationValue> constants =
-        new HashMap<>() {
+        new HashMap<String, EvaluationValue>() {
           {
             put("A", EvaluationValue.stringValue("a"));
             put("B", EvaluationValue.stringValue("b"));

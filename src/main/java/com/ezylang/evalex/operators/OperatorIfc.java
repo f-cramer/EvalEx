@@ -70,9 +70,7 @@ public interface OperatorIfc {
    */
   int OPERATOR_PRECEDENCE_POWER_HIGHER = 80;
 
-  /**
-   * @return The operator's precedence.
-   */
+  /** @return The operator's precedence. */
   int getPrecedence();
 
   /**

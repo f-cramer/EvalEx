@@ -123,7 +123,7 @@ class InfixEqualsOperatorTest extends BaseEvaluationTest {
     Expression expression = new Expression("a=b");
 
     Map<String, BigDecimal> structure1 =
-        new HashMap<>() {
+        new HashMap<String, BigDecimal>() {
           {
             put("a", new BigDecimal(35));
             put("b", new BigDecimal(99));
@@ -131,7 +131,7 @@ class InfixEqualsOperatorTest extends BaseEvaluationTest {
         };
 
     Map<String, BigDecimal> structure2 =
-        new HashMap<>() {
+        new HashMap<String, BigDecimal>() {
           {
             put("a", new BigDecimal(35));
             put("b", new BigDecimal(99));
@@ -139,7 +139,7 @@ class InfixEqualsOperatorTest extends BaseEvaluationTest {
         };
 
     Map<String, BigDecimal> structure3 =
-        new HashMap<>() {
+        new HashMap<String, BigDecimal>() {
           {
             put("a", new BigDecimal(45));
             put("b", new BigDecimal(99));
